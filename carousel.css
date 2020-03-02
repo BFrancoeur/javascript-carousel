@@ -1,6 +1,6 @@
 * {box-sizing:border-box}
 
-#slideshow {
+#carousel {
     position: relative;
     width: 100%;
     height: calc(100vw * .5625);
@@ -10,7 +10,7 @@
     /* overflow: hidden; */
 }
 
-.slide {
+.carousel__content {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -25,7 +25,7 @@
     transition: opacity 1s;
 }
 
-.showing {
+.carousel--show {
     opacity: 1;
     z-index: 2;
 }
