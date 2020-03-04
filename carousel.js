@@ -1,110 +1,92 @@
-
+// import CookieManager from './cookie-manager.js'; // eslint-disable-line @wordpress/dependency-group
 class Carousel {
-	constructor(carousel, slides, logos, dots, slidesLength, logosLength, dotsLength, currentSlide) {
-		this.carousel = document.getElementById('carousel');
+	constructor() {
+		this.carousel = document.getElementById( 'carousel' );
 		// this.cookieManager = new CookieManager();
-		// this.slides = document.querySelectorAll( '.carousel__content' );
+		this.slides = document.querySelectorAll( '.carousel__content' );
 		this.logos = document.querySelectorAll( '.logo' );
 		this.dots = document.querySelectorAll( '.dot' );
-		// this.slidesLength;
-		this.logosLength;
-		// this.dotsLength;
-    this.currentSlide = 0;
-
-    this.init();
+		this.currentSlide = 0;
+		this.n = 0;
 	}
 
 	init() {
-		if ( ! this.carousel ) {
-			return;
-		}
-
-		// this.carousel.forEach( ( carousel ) => {
-		// 	const content = carousel.querySelector( '.carousel__content' );
-		// 	if ( ! content ) {
-		// 		return;
-		// 	}
-		//
-		// 	const carouselId = content.innerHTML.replace( /[^\w]/gi, '' );
-		// 	const cookie = this.cookieManager.getCookie( carouselId );
-		// 	if ( 'dismissed' === cookie ) {
-		// 		return;
-		// 	}
-		// } );
-	}
-
-
-
-	// dynamically add dots to carousel that equals the number of slides
-	addDots() {
-		this.slides = document.querySelectorAll( '.carousel__content' );
-		this.dots = document.querySelectorAll( '.dot' );
-
-		this.slidesLength = this.slides.length;
-		this.dotsLength = 0;
-
-		const carouselNav = document.getElementById( 'carousel-nav' ),
-			span = document.createElement( 'span' );
-
-		while ( this.dotsLength < this.slidesLength ) {
-			span.setAttribute( 'class', 'dot' );
-			span.setAttribute( 'onclick', 'selectSlide( ' + ( this.dotsLength + 1 ) + ' )' );
-
-			carouselNav.appendChild( span );
-
-			this.dotsLength++;
-			return this.dotsLength;
+		if (document.readyState === 'complete' || document.readyState === 'interactive') {
+				this.showSlides(this.slideIndex);
+		} else {
+			window.addEventListener('DOMContentLoaded', () => {
+				this.showSlides();
+			});
+			window.addEventListener('load', () => {
+				this.showSlides();
+			});
 		}
 	}
 
-	// select slide from nav dots
-	selectSlide( n, slides, logos, dots, currentSlide ) {
+
+	showSlides() {
+		this.i = 0;
+		this.slideIndex = 0;
 		this.slides = document.querySelectorAll( '.carousel__content' );
-	  this.logos = document.querySelectorAll( '.logo' );
-		this.dots = document.querySelectorAll( '.dot' );
 
-		this.addDots(this.slides.length);
+		for ( this.i = 0; this.i < this.slides.length; this.i++ ) {
+			this.slides[ this.i ].classList.remove('carousel--show');
+		}
 
+		this.slideIndex++;
 
+		console.log('this.slideIndex = ', + this.slideIndex);
 
-		// this.addDots(slides.length);
-    console.log('this.slides: ' + this.slides);
-		console.log('selectSlide: ' + selectSlide); // currentSlide is undefined
-		this.slides[ selectSlide ].classList.remove( 'carousel--show' );
-		this.logos[ selectSlide ].classList.remove( 'active' );
-		this.dots[ selectSlide ].classList.remove( 'active' );
+		if ( this.slideIndex > this.slides.length ) {
+			this.slideIndex = 1;
+		}
 
-		this.currentSlide = ( currentSlide + 1 ) % slides.length;
-
-		this.slides[ selectSlide ].classList.add( 'carousel--show' );
-		this.logos[ selectSlide ].classList.add( 'active' );
-		this.dots[ selectSlide ].classList.add( 'active' );
-
-		setInterval( this.nextSlide(), 2000 );
+		console.log('slides[slideIndex -1] = ' + this.slides[this.slideIndex]);
+		this.slides.object[ this.slideIndex - 1 ].classList.add('carousel--show');
+		setInterval( this.showSlides, 2000 );
 	}
 
-	nextSlide( n, slides, logos, dots, currentSlide ) {
-		this.slides = document.querySelectorAll( '.carousel__content' );
-	  this.logos = document.querySelectorAll( '.logo' );
-		this.dots = document.querySelectorAll( '.dot' );
 
-		this.addDots(this.slides.length);
+	// current slide from nav dots
+	// selectSlide( n, slides, logos, dots, currentSlide ) {
+	// 	slides = document.querySelectorAll( '.carousel__content' );
+	// 	logos = document.querySelectorAll( '.logo' );
+	// 	dots = document.querySelectorAll( '.dot' );
 
-    console.log('this.slides: ' + this.slides);
-		console.log('selectSlide: ' + selectSlide); // currentSlide is undefined
-		this.slides[ selectSlide ].classList.remove( 'carousel--show' );
-		this.logos[ selectSlide ].classList.remove( 'active' );
-		this.dots[ selectSlide ].classList.remove( 'active' );
+	// 	console.log('currentSlide = ' + currentSlide);
 
-		this.currentSlide = ( currentSlide + 1 ) % slides.length;
+	// 	this.slides[ currentSlide ].classList.remove( 'carousel--show' );
+	// 	this.logos[ currentSlide ].classList.remove( 'active' );
+	// 	this.dots[ currentSlide ].classList.remove( 'active' );
 
-		this.slides[ selectSlide ].classList.add( 'carousel--show' );
-		this.logos[ selectSlide ].classList.add( 'active' );
-		this.dots[ selectSlide ].classList.add( 'active' );
+	// 	this.currentSlide = ( currentSlide = n - 1 ) % slides.length;
 
-		setInterval( this.nextSlide(), 2000 );
-	}
-}
+	// 	this.slides[ currentSlide ].classList.add( 'carousel--show' );
+	// 	this.logos[ currentSlide ].classList.add( 'active' );
+	// 	this.dots[ currentSlide ].classList.add( 'active' );
 
-let carousel = new Carousel();
-carousel.nextSlide();
+	// 	setInterval( this.currentSlide(), 2000 );
+	// 	this.showSlides();
+	// }
+
+	// showSlides( n, slides, logos, dots, currentSlide ) {
+	// 	slides = document.querySelectorAll( '.carousel__content' );
+	// 	logos = document.querySelectorAll( '.logo' );
+	// 	dots = document.querySelectorAll( '.dot' );
+
+	// 	this.slides[ currentSlide ].classList.remove( 'carousel--show' );
+	// 	this.logos[ currentSlide ].classList.remove( 'active' );
+	// 	this.dots[ currentSlide ].classList.remove( 'active' );
+
+	// 	this.currentSlide = ( currentSlide + 1 ) % slides.length;
+
+	// 	this.slides[ currentSlide ].classList.add( 'carousel--show' );
+	// 	this.logos[ currentSlide ].classList.add( 'active' );
+	// 	this.dots[ currentSlide ].classList.add( 'active' );
+
+	// 	setInterval( this.nextSlide(), 2000 );
+	// }
+} // end Carousel class
+
+const carousel = new Carousel();
+carousel.init();
