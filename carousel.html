@@ -11,25 +11,25 @@
 <body>
 
   <!-- Slideshow container -->
-  <div id="slideshow">
+  <div id="carousel">
 
-    <div class="slide showing">
+    <div class="carousel__content carousel--show">
       <img src="https://i.picsum.photos/id/268/400/225.jpg" style="width:100%">
     </div>
 
-    <div class="slide">
+    <div class="carousel__content">
       <img src="https://i.picsum.photos/id/729/400/225.jpg" style="width:100%">
     </div>
 
-    <div class="slide">
+    <div class="carousel__content">
       <img src="https://i.picsum.photos/id/705/400/225.jpg" style="width:100%">
     </div>
 
-    <div class="slide">
+    <div class="carousel__content">
       <img src="https://i.picsum.photos/id/517/400/225.jpg" style="width:100%">
     </div>
 
-    <div class="slide">
+    <div class="carousel__content">
       <img src="https://i.picsum.photos/id/767/400/225.jpg" style="width:100%">
     </div>
 
@@ -37,7 +37,11 @@
 
   <!-- The dots/circles -->
   <div id="carousel-nav">
-
+    <span class="dots" onclick="selectSlide(1)"></span>
+    <span class="dots" onclick="selectSlide(2)"></span>
+    <span class="dots" onclick="selectSlide(3)"></span>
+    <span class="dots" onclick="selectSlide(4)"></span>
+    <span class="dots" onclick="selectSlide(5)"></span>
   </div>
 
 
